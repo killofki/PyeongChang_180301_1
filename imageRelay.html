@@ -58,7 +58,7 @@ var
 	, nameRange 
 	; 
 
-overName .forEach( ([ x, y ]) => addDot( x, y ) ); 
+// overName .forEach( ([ x, y ]) => addDot( x, y ) ); 
 overName .forEach( ([ x, y ]) => overNameCut[ Math .floor( y / 12.8 ) ] = x );
 overNameCut .forEach( ( x, p ) => 
 	overCutX 
@@ -68,6 +68,7 @@ overNameCut .forEach( ( x, p ) =>
 		) 
 	); 
 nameRange = overNameCut .map( ( x, i ) => [ x, 1920 + ( overNameCut[ i + 1 ] | 0 ) ] ); 
+nameRange .forEach( ( [a, b], i ) => addDot( b - 1920, ( i + 1 ) * 12.8 ) ); // sample pointer 
 
 // user adding 
 $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
