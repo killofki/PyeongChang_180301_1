@@ -11,16 +11,17 @@ div#imgBody {
 	--imgheight : 1920px; 
 	--lineheight : 12.8px; 
 	
-	--width : calc( var( --imgwidth ) + 29px + 3px ); 
-	--height : var( --imgheight ); 
+	--imgBodyWidth : calc( var( --imgwidth ) + 29px + 3px ); 
+	--imgBodyHeight : var( --imgheight ); 
 	
-	width : var( --width ); 
-	height : var( --height ); 
+	width : var( --imgBodyWidth ); 
+	height : var( --imgBodyHeight ); 
 	overflow : hidden; 
 	position : relative; 
 	
 	--dotwidth : 3px; 
 	--dotheight : 3px; 
+	--dotcolor : blue; 
 	} 
 
 img { 
@@ -39,18 +40,18 @@ img#img2 {
 
 div.dot { 
 	position : absolute; 
-	width : var( --dotwidth ); 
-	height : var( --dotheight ); 
 	overflow : hidden; 
 	display : inline-block; 
-	background-color : blue; 
 	left : calc( var( --left ) + var( --imgwidth ) ); 
 	top : calc( var( --top ) - var( --lineheight ) ); 
+	width : var( --dotwidth ); 
+	height : var( --dotheight ); 
+	background-color : var( --dotcolor ); 
 	} 
 
 div#overmouse { 
-	width : var( --width ); 
-	height : var( --height ); 
+	width : var( --imgBodyWidth ); 
+	height : var( --imgBodyHeight ); 
 	overflow : hidden; 
 	position : absolute; 
 	display : inline-block; 
