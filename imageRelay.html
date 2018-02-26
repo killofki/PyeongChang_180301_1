@@ -87,13 +87,20 @@ Object .assign(
 	  $( 'div#overmouse' )
 	, { 
 		  onmousemove : ( { offsetX, offsetY } = event ) => { 
-			overmousedown && console .log( offsetX, offsetY ); 
+			if ( ! overmousedown ) { return; } 
+			
+			console .log( offsetX, offsetY ); 
 			} 
 		, onmousedown : q => { overmousedown = true; } 
-		, onmouseup : q => { overmousedown = false; } 
-		, onmouseout : q => { overmousedown = false; } 
 		} 
 	); // Object .assign() // div#overmouse 
+Object .assign( 
+	  window 
+	, { 
+		  onmouseup : q => { overmousedown = false; } 
+		, onmouseout : q => { overmousedown = false; } 
+		}
+	); 
 
 // functions.. 
 
