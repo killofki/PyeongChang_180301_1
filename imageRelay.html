@@ -11,6 +11,7 @@ div#imgBody {
 	height : 1920px; 
 	overflow : hidden; 
 	position : relative; 
+	background-color : blue; 
 	} 
 
 img { 
@@ -25,39 +26,55 @@ img#img1 {
 img#img2 { 
 	top : -12.8px; 
 	left : 1920px; 
+	opacity : 0.7; 
 	} 
 
-div.screen { 
-	background-color : blue; 
+div.dot { 
+	position : absolute; 
+	width : 3px; 
+	height : 3px; 
 	overflow : hidden; 
 	display : inline-block; 
-	position : absolute; 
-	width : calc( 2 * 1920px ); 
-	} 
-
-div#overimg1 { 
-	top : 0px; 
-	height : 0px; 
-	height : var( --overpo ); 
-	} 
-
-div#overimg2 { 
-	top : calc( var( --overpo ) + 12.8px ); 
-	height : 1920px; 
-	height : 1920px; 
+	background-color : blue; 
+	left : calc( var( --left ) + 1920px ); 
+	top : calc( var( --top ) - 12.8px ); 
 	} 
 	</style>
 
 <!-- img from https://twitter.com/hellopolicy/status/967941239558385664 -->
-<div id="imgBody" style="--overpo : 0px" onclick="[ this .style ] .map( s => [ s, s .getPropertyValue( '--overpo' ) .match( /(?<poValue>\d+(\.\d+)?)(px)?/ ) .groups ] ) .forEach( ([ s, { poValue } ]) => s .setProperty( '--overpo', `${ poValue - ( -12.8 ) }px` ) )" >
+<div id="imgBody" style="--overpo : 0px" >
 	<img id="img1" src="DW7RL5GVMAITe3X.jpg large.jpg" />
 	<img id="img2" src="DW7RL5GVMAITe3X.jpg large.jpg" />
-	<div class="screen" id="overimg1" ></div>
-	<div class="screen" id="overimg2" ></div>
 	</div>
 
 <script>
 
+var oa = []; 
+
+$( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
+	oa .push( [ offsetX, offsetY ] ); 
+	console .log( offsetX, offsetY ); 
+	$( 'div#imgBody' ) .appendChild( 
+		[ 
+			  $c( 'div' ) 
+			, ( ev ) => { 
+				ev .className = 'dot'; 
+				thisEach( 
+					  { 
+						  left : `${ offsetX }px` 
+						, top : `${ offsetY }px` 
+						} 
+					, ( v, p ) => ev .style .setProperty( `--${ p }`, v ) 
+					); 
+				} 
+			] 
+		.reduce( ( ev, F ) => ( F( ev ), ev ) ) 
+		) 
+	}; 
+
+function thisEach( o, F ) { Object .keys( o ) .forEach( p => F( o[ p ], p, o ) ); } 
+function $( v ) { return document .querySelector( v ); } 
+function $c( v ) { return document .createElement( v ); } 
 	</script>
 
 	</body>
