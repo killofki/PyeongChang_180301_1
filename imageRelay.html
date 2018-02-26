@@ -67,21 +67,13 @@ overNameCut .forEach( ( x, p ) =>
 		: ( overNameCut[ p ] = overCutX[ i ], b )  
 		) 
 	); 
+nameRange = overNameCut .map( ( x, i ) => [ x, 1920 + ( overNameCut[ i + 1 ] | 0 ) ] ); 
 
+// user adding 
 $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
 	overName .push( [ offsetX, offsetY ] ); 
 	addDot( offsetX, offsetY ); 
 	}; 
-
-nameRange = 
-	overNameCut 
-	.map( ( v, i ) => [ 
-		  v
-		, 1920 + ( 
-			[ overNameCut[ i + 1 ] || 0 ] 
-			) 
-		] ) 
-	; 
 
 // functions.. 
 
