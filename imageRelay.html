@@ -58,12 +58,68 @@ div#overmouse {
 	position : absolute; 
 	display : inline-block; 
 	} 
+
+div#screen { 
+	position : absolute; 
+	} 
+div#screenZone { 
+	width : var( --imgBodyWidth ); 
+	height : var( --imgBodyHeight ); 
+	overflow : hidden; 
+	display : inline-block; 
+	position : relative; 
+	--screentop : 0px; 
+	--screenbottom : var( --imgBodyHeight ); 
+	--screenleft : 0px; 
+	--screenright : var( --imgBodyWidth ); 
+	--screencolor : gray; 
+	opacity : 0.866; 
+	} 
+
+div#screentop, div#screenbottom, div#screenleft, div#screenright { 
+	position : absolute; 
+	display : inline-block; 
+	overflow : hidden; 
+	background-color : var( --screencolor ); 
+	} 
+div#screentop { 
+	left : 0; 
+	top : 0; 
+	width : var( --imgBodyWidth ); 
+	height : var( --screentop ); 
+	} 
+div#screenbottom { 
+	left : 0; 
+	top : var( --screenbottom ); 
+	width : var( --imgBodyWidth ); 
+	height : var( --imgBodyHeight ); 
+	} 
+div#screenleft { 
+	left : 0; 
+	top : 0; 
+	width : var( --screenleft ); 
+	height : var( --imgBodyHeight ); 
+	} 
+div#screenright { 
+	left : var( --screenright ); 
+	top : 0; 
+	width : var( --imgBodyWidth ); 
+	height : var( --imgBodyHeight ); 
+	}
 	</style>
 
 <!-- img from https://twitter.com/hellopolicy/status/967941239558385664 -->
 <div id="imgBody" style="--overpo : 0px" >
 	<img id="img1" src="DW7RL5GVMAITe3X.jpg large.jpg" />
 	<img id="img2" src="DW7RL5GVMAITe3X.jpg large.jpg" />
+	<div id="screen" >
+		<div id="screenZone" >
+			<div id="screentop" ></div>
+			<div id="screenbottom" ></div>
+			<div id="screenleft" ></div>
+			<div id="screenright" ></div>
+			</div>
+		</div>
 	<div id="dotZone" ></div>
 	<div id="overmouse" ></div>
 	</div>
@@ -88,9 +144,7 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 		  $( 'div#overmouse' )
 		, { 
 			  onmousemove : ( { offsetX, offsetY } = event ) => { 
-				if ( ! overmousedown ) { return; } 
-				
-				console .log( offsetX, offsetY ); 
+				overmousedown && mousemove( offsetX, offsetY ); 
 				} 
 			, onmousedown : q => { overmousedown = true; } 
 			} 
@@ -98,8 +152,9 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 	, [ 
 		  window 
 		, { 
-			  onmouseup : q => { overmousedown = false; } 
-			, onblur : q => { overmousedown = false; } 
+			  onmouseup : mouseout 
+			, onblur : mouseout 
+			, ondragend : mouseout 
 			} 
 		]
 	] 
@@ -107,6 +162,28 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 	; 
 
 // functions.. 
+function mousemove( x, y ) { 
+	let 
+		  p = Math .floor( y / 12.8 )
+		, [ xfrom, xto ] = nameRange[ p ] 
+		; 
+	y = Math .floor( y / 12.8 ) * 12.8; 
+	thisEach( 
+		  { 
+			  '--screentop' : `${ y }px` 
+			, '--screenbottom' : `${ y + 12.8 }px` 
+			, '--screenleft' : `${ xfrom }px` 
+			, '--screenright' : `${ xto }px` 
+			}
+		, ( v, p ) => $( 'div#screenZone' ) .style .setProperty( p, v ) 
+		); 
+	} 
+function mouseout() { 
+	overmousedown = false; 
+	[ '--screentop', '--screenbottom', '--screenleft', '--screenright' ] 
+	.forEach( p => $( 'div#screenZone' ) .style .removeProperty( p ) ) 
+		; 
+	} 
 
 function getNameZone() { 
 	let 
