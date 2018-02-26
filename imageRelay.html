@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+<body>
+
+<style>
+div#imgBody { 
+	width : calc( 2 * 1920px ); 
+	height : 1920px; 
+	overflow : hidden; 
+	position : relative; 
+	} 
+
+img { 
+	position : absolute; 
+	} 
+
+img#img1 { 
+	top : 0; 
+	left : 0; 
+	} 
+
+img#img2 { 
+	top : -12.8px; 
+	left : 1920px; 
+	} 
+
+div.screen { 
+	background-color : blue; 
+	overflow : hidden; 
+	display : inline-block; 
+	position : absolute; 
+	width : calc( 2 * 1920px ); 
+	} 
+
+div#overimg1 { 
+	top : 0px; 
+	height : 0px; 
+	height : var( --overpo ); 
+	} 
+
+div#overimg2 { 
+	top : calc( var( --overpo ) + 12.8px ); 
+	height : 1920px; 
+	height : 1920px; 
+	} 
+	</style>
+
+<!-- img from https://twitter.com/hellopolicy/status/967941239558385664 -->
+<div id="imgBody" style="--overpo : 0px" onclick="[ this .style ] .map( s => [ s, s .getPropertyValue( '--overpo' ) .match( /(?<poValue>\d+(\.\d+)?)(px)?/ ) .groups ] ) .forEach( ([ s, { poValue } ]) => s .setProperty( '--overpo', `${ poValue - ( -12.8 ) }px` ) )" >
+	<img id="img1" src="DW7RL5GVMAITe3X.jpg large.jpg" />
+	<img id="img2" src="DW7RL5GVMAITe3X.jpg large.jpg" />
+	<div class="screen" id="overimg1" ></div>
+	<div class="screen" id="overimg2" ></div>
+	</div>
+
+<script>
+
+	</script>
+
+	</body>
+	</html>
