@@ -72,6 +72,7 @@ div#overmouse {
 
 var 
 	  { overName, overNameCut, overCutX, nameRange } = getNameZone() 
+	, overmousedown = false 
 	; 
 
 nameRange .forEach( ( [a, b], i ) => addDot( b - 1920, ( i + 1 ) * 12.8 ) ); // sample pointer 
@@ -82,9 +83,17 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 	addDot( offsetX, offsetY ); 
 	}; 
 // mouse moving 
-$( 'div#overmouse' ) .onmousemove = ( { offsetX, offsetY } = event ) => { 
-	console .log( offsetX, offsetY ); 
-	}; 
+Object .assign( 
+	  $( 'div#overmouse' )
+	, { 
+		  onmousemove : ( { offsetX, offsetY } = event ) => { 
+			overmousedown && console .log( offsetX, offsetY ); 
+			} 
+		, onmousedown : q => { overmousedown = true; } 
+		, onmouseup : q => { overmousedown = false; } 
+		, onmouseout : q => { overmousedown = false; } 
+		} 
+	); // Object .assign() // div#overmouse 
 
 // functions.. 
 
