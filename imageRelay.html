@@ -7,12 +7,20 @@
 
 <style>
 div#imgBody { 
-	--width : calc( 1920px + 29px + 3px ); 
-	--height : 1920px; 
+	--imgwidth : 1920px; 
+	--imgheight : 1920px; 
+	--lineheight : 12.8px; 
+	
+	--width : calc( var( --imgwidth ) + 29px + 3px ); 
+	--height : var( --imgheight ); 
+	
 	width : var( --width ); 
 	height : var( --height ); 
 	overflow : hidden; 
 	position : relative; 
+	
+	--dotwidth : 3px; 
+	--dotheight : 3px; 
 	} 
 
 img { 
@@ -25,19 +33,19 @@ img#img1 {
 	} 
 
 img#img2 { 
-	top : -12.8px; 
-	left : 1920px; 
+	top : calc( 0px - var( --lineheight ) ); 
+	left : var( --imgheight ); 
 	} 
 
 div.dot { 
 	position : absolute; 
-	width : 3px; 
-	height : 3px; 
+	width : var( --dotwidth ); 
+	height : var( --dotheight ); 
 	overflow : hidden; 
 	display : inline-block; 
 	background-color : blue; 
-	left : calc( var( --left ) + 1920px ); 
-	top : calc( var( --top ) - 12.8px ); 
+	left : calc( var( --left ) + var( --imgwidth ) ); 
+	top : calc( var( --top ) - var( --lineheight ) ); 
 	} 
 
 div#overmouse { 
