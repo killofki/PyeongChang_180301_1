@@ -99,7 +99,7 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 		  window 
 		, { 
 			  onmouseup : q => { overmousedown = false; } 
-			, onmouseout : q => { overmousedown = false; } 
+			, onblur : q => { overmousedown = false; } 
 			} 
 		]
 	] 
