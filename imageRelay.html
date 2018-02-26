@@ -7,8 +7,10 @@
 
 <style>
 div#imgBody { 
-	width : calc( 1920px + 29px + 3px ); 
-	height : 1920px; 
+	--width : calc( 1920px + 29px + 3px ); 
+	--height : 1920px; 
+	width : var( --width ); 
+	height : var( --height ); 
 	overflow : hidden; 
 	position : relative; 
 	} 
@@ -37,6 +39,15 @@ div.dot {
 	left : calc( var( --left ) + 1920px ); 
 	top : calc( var( --top ) - 12.8px ); 
 	} 
+
+div#overmouse { 
+	width : var( --width ); 
+	height : var( --height ); 
+	overflow : hidden; 
+	position : absolute; 
+	display : inline-block; 
+	opacity : 0.1; 
+	} 
 	</style>
 
 <!-- img from https://twitter.com/hellopolicy/status/967941239558385664 -->
@@ -44,6 +55,7 @@ div.dot {
 	<img id="img1" src="DW7RL5GVMAITe3X.jpg large.jpg" />
 	<img id="img2" src="DW7RL5GVMAITe3X.jpg large.jpg" />
 	<div id="dotZone" ></div>
+	<div id="overmouse" ></div>
 	</div>
 
 <script>
