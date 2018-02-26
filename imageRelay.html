@@ -72,11 +72,10 @@ function catchoverNameCut() { // for check about x position
 			list .map( v => 
 				main 
 				.map( x => x - v ) 
-				.map( v => Math .abs( v ) ) 
+				.map( v => v * v ) 
 				.reduce( ( a, b ) => a > b ? b : a ) 
 				) 
 			) 
-		.map( v => v * v ) 
 		.reduce( ( a, b ) => a + b ) 
 		); 
 	} 
