@@ -83,24 +83,28 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 	addDot( offsetX, offsetY ); 
 	}; 
 // mouse moving 
-Object .assign( 
-	  $( 'div#overmouse' )
-	, { 
-		  onmousemove : ( { offsetX, offsetY } = event ) => { 
-			if ( ! overmousedown ) { return; } 
-			
-			console .log( offsetX, offsetY ); 
+[ 
+	  [
+		  $( 'div#overmouse' )
+		, { 
+			  onmousemove : ( { offsetX, offsetY } = event ) => { 
+				if ( ! overmousedown ) { return; } 
+				
+				console .log( offsetX, offsetY ); 
+				} 
+			, onmousedown : q => { overmousedown = true; } 
 			} 
-		, onmousedown : q => { overmousedown = true; } 
-		} 
-	); // Object .assign() // div#overmouse 
-Object .assign( 
-	  window 
-	, { 
-		  onmouseup : q => { overmousedown = false; } 
-		, onmouseout : q => { overmousedown = false; } 
-		}
-	); 
+		] 
+	, [ 
+		  window 
+		, { 
+			  onmouseup : q => { overmousedown = false; } 
+			, onmouseout : q => { overmousedown = false; } 
+			} 
+		]
+	] 
+.forEach( ([ o, op ]) => Object .assign( o, op ) ) 
+	; 
 
 // functions.. 
 
