@@ -45,6 +45,7 @@ div.dot {
 <div id="imgBody" style="--overpo : 0px" >
 	<img id="img1" src="DW7RL5GVMAITe3X.jpg large.jpg" />
 	<img id="img2" src="DW7RL5GVMAITe3X.jpg large.jpg" />
+	<div id="dotZone"></div>
 	</div>
 
 <script>
@@ -57,7 +58,7 @@ var
 	, nameRange 
 	; 
 
-overName .forEach( ( [ x, y ], i ) => addDot( x, y, i ) ); 
+overName .forEach( ([ x, y ]) => addDot( x, y ) ); 
 overName .forEach( ([ x, y ]) => overNameCut[ Math .floor( y / 12.8 ) ] = x );
 overNameCut .forEach( ( x, p ) => 
 	overCutX 
@@ -97,7 +98,7 @@ function catchoverNameCut() { // for check about x position
 	} 
 
 function addDot( x, y, i = $$( 'div.dot' ) .length | 0 ) { 
-	$( 'div#imgBody' ) .appendChild( 
+	$( 'div#dotZone' ) .appendChild( 
 		[ 
 			  $c( 'div' ) 
 			, ( ev ) => { 
