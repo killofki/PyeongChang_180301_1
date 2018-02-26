@@ -55,7 +55,15 @@ var
 	, overNameCut = [ ... Array( 150 ) ] .map( q => 0 ) 
 	; 
 
-overName .forEach( ( [ x, y ], i, a ) => overNameCut[ Math .floor( y / 12.8 ) ] = x );
+overName .forEach( ([ x, y ]) => addDot( x, y ) ); 
+overName .forEach( ([ x, y ]) => overNameCut[ Math .floor( y / 12.8 ) ] = x );
+
+$( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
+	overName .push( [ offsetX, offsetY ] ); 
+	addDot( offsetX, offsetY ); 
+	}; 
+
+// functions.. 
 
 function catchoverNameCut() { // for check about x position 
 	return ( 
@@ -72,14 +80,6 @@ function catchoverNameCut() { // for check about x position
 		.reduce( ( a, b ) => a + b ) 
 		); 
 	} 
-
-$( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
-	overName .push( [ offsetX, offsetY ] ); 
-	addDot( offsetX, offsetY ); 
-	}; 
-
-Object .defineProperty( window, 'oavalue', { get : q => JSON .stringify( overName ) } ); // for view sample 
-overName .forEach( ([ x, y ]) => addDot( x, y ) ); 
 
 function addDot( x, y ) { 
 	$( 'div#imgBody' ) .appendChild( 
