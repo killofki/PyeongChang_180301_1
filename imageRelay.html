@@ -75,7 +75,7 @@ var
 	, overmousedown = false 
 	; 
 
-nameRange .forEach( ( [a, b], i ) => addDot( b - 1920, ( i + 1 ) * 12.8 ) ); // sample pointer 
+nameRange .forEach( ( [ a, b ], i ) => addDot( b - 1920, ( i + 1 ) * 12.8 ) ); // sample pointer 
 
 // user adding ( without overmouse ) 
 $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => { 
