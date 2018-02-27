@@ -195,16 +195,33 @@ imgLoader .onload = q => {
 			, canvasWidth, canvasHeight 
 			, fromP, size, toP 
 			, i 
+			
+			, nameBlock = [ 
+				  [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
+				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3125 
+				] 
+			
+			, lineQuery = nameBlock .length - 1 
+			, nameWidths 
+			, nameRight = [] 
+			, rightP 
 			; 
 		
 		lineHeight = 12.8; 
-		nameCount = 64; 
 		
-		[ lineLeft, lineRight ] = nameRange[ 0 ]; // pick line 
-		[ lineTop, lineBottom ] = [ 0, 0 + lineHeight ]; 
+		// lineQuery = 1 
+		nameWidths = nameBlock[ lineQuery ]; 
+		
+		rightP = 0; 
+		nameWidths .map( ( w, i ) => nameRight[ i ] = rightP += w ); 
+		nameCount = nameRight .length = nameWidths .length; 
+		
+		[ lineLeft, lineRight ] = nameRange[ lineQuery ]; // pick line 
+		[ lineTop, lineBottom ] = [ lineQuery * lineHeight, ( lineQuery + 1 ) * lineHeight ]; 
 		
 		lineWidth = lineRight - lineLeft; 
 		eachWidth = lineWidth / nameCount; 
+		console .log( eachWidth ); 
 		
 		canvasWidth = eachWidth; 
 		canvasHeight = lineHeight * nameCount; 
@@ -214,12 +231,16 @@ imgLoader .onload = q => {
 		.forEach( ce => Object .assign( ce, { width, height : canvasHeight } ) ) 
 			; 
 		
+		// [ [ 0, 0 ] ] 
 		[ [ 0, 0 ], [ width, -lineHeight ] ] 
 		.forEach( ([ xGab, yGab ]) => 
 			forIn( nameCount, i => 
 				inCtx .drawImage( imgLoader 
 					, ... [] .concat( ... 
-						[ [ i * eachWidth - xGab, -yGab, eachWidth, lineHeight ], [ 0, i * lineHeight, eachWidth, lineHeight ] ] 
+						[ 
+							  [ lineLeft + i * eachWidth - xGab, lineTop - yGab, eachWidth, lineHeight ] 
+							, [ 0, i * lineHeight, eachWidth, lineHeight ] 
+							] 
 						.map( va => va .map( v => Math .floor( v ) ) ) 
 						.map( ([ x, y, w, h ]) => [ x, y, w + 1, h + 1 ] ) 
 						) 
