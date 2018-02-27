@@ -198,7 +198,18 @@ imgLoader .onload = q => {
 			
 			, nameBlock = [ 
 				  [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
-				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3125 
+				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3333 
+				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3015 
+				, [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
+				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3333 
+				
+				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3015  
+				, [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
+				, [ 
+					... [ ... Array( 42 ) ] .map( q => 3 ) // 30.3125 
+					, 2 
+					, ... [ ... Array( 20 ) ] .map( q => 3 ) 
+					] 
 				] 
 			
 			, lineQuery = nameBlock .length - 1 
