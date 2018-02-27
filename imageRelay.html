@@ -109,6 +109,7 @@ div#screenright {
 
 div#canvasZone { 
 	background-color : blue; 
+	display : inline-block; 
 	} 
 	</style>
 
@@ -206,16 +207,17 @@ imgLoader .onload = q => {
 				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3015  
 				, [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
 				, [ 
-					... [ ... Array( 42 ) ] .map( q => 3 ) // 30.3125 
+					... [ ... Array( 39 ) ] .map( q => 3 ) 
 					, 2 
-					, ... [ ... Array( 20 ) ] .map( q => 3 ) 
+					, ... [ ... Array( 23 ) ] .map( q => 3 ) 
 					] 
 				] 
 			
 			, lineQuery = nameBlock .length - 1 
 			, nameWidths 
 			, nameRight = [] 
-			, rightP 
+			, rightP, pLen 
+			, leftv, rightv 
 			; 
 		
 		lineHeight = 12.8; 
@@ -223,40 +225,44 @@ imgLoader .onload = q => {
 		// lineQuery = 1 
 		nameWidths = nameBlock[ lineQuery ]; 
 		
-		rightP = 0; 
-		nameWidths .map( ( w, i ) => nameRight[ i ] = rightP += w ); 
-		nameCount = nameRight .length = nameWidths .length; 
-		
 		[ lineLeft, lineRight ] = nameRange[ lineQuery ]; // pick line 
 		[ lineTop, lineBottom ] = [ lineQuery * lineHeight, ( lineQuery + 1 ) * lineHeight ]; 
-		
 		lineWidth = lineRight - lineLeft; 
-		eachWidth = lineWidth / nameCount; 
-		console .log( eachWidth ); 
 		
-		canvasWidth = eachWidth; 
+		rightP = 0; 
+		nameWidths .map( ( w, i ) => nameRight[ i ] = rightP += w ); 
+		pLen = lineWidth / rightP; 
+		console .log( pLen ); 
+		nameCount = nameRight .length = nameWidths .length; 
+		
+		
+		canvasWidth = nameWidths .reduce( ( a, b ) => a > b ? a : b ) * pLen + 1; 
 		canvasHeight = lineHeight * nameCount; 
+		console .log( canvasWidth, canvasHeight ); 
 		
 		[ inC, inCtx ] 
 		// .forEach( ce => Object .assign( ce, { width, height } ) ) 
-		.forEach( ce => Object .assign( ce, { width, height : canvasHeight } ) ) 
+		.forEach( ce => Object .assign( ce, { width : canvasWidth + 1 + 1, height : canvasHeight } ) ) 
 			; 
 		
 		// [ [ 0, 0 ] ] 
 		[ [ 0, 0 ], [ width, -lineHeight ] ] 
 		.forEach( ([ xGab, yGab ]) => 
-			forIn( nameCount, i => 
+			forIn( nameCount, i => { 
+				[ leftv, rightv ] = [ i - 1, i ] .map( p => nameRight[ p ] || 0 ) .map( v => v * pLen ); 
+				eachWidth = rightv - leftv; 
 				inCtx .drawImage( imgLoader 
 					, ... [] .concat( ... 
 						[ 
-							  [ lineLeft + i * eachWidth - xGab, lineTop - yGab, eachWidth, lineHeight ] 
-							, [ 0, i * lineHeight, eachWidth, lineHeight ] 
+							  [ lineLeft + leftv - xGab, lineTop - yGab, eachWidth, lineHeight ] 
+							  // [ lineLeft + i * eachWidth - xGab, lineTop - yGab, eachWidth, lineHeight ] 
+							, [ 1, i * lineHeight, eachWidth, lineHeight ] 
 							] 
 						.map( va => va .map( v => Math .floor( v ) ) ) 
 						.map( ([ x, y, w, h ]) => [ x, y, w + 1, h + 1 ] ) 
 						) 
 					) 
-				) 
+				} ) 
 			); 
 		
 		$( 'div#canvasZone' ) .appendChild( inC ); 
