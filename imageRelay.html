@@ -197,21 +197,24 @@ imgLoader .onload = q => {
 			, fromP, size, toP 
 			, i 
 			
-			, nameBlock = [ 
-				  [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
-				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3333 
-				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3015 
-				, [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
-				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3333 
-				
-				, [ ... Array( 63 ) ] .map( q => 3 ) // 30.3015  
-				, [ ... Array( 64 ) ] .map( q => 3 ) // 30.3125 
-				, [ 
-					... [ ... Array( 39 ) ] .map( q => 3 ) 
-					, 2 
-					, ... [ ... Array( 23 ) ] .map( q => 3 ) 
+			, nameBlock = 
+				[ 
+					  [ 64 ] // 30.3125 
+					, [ 63 ] // 30.3333 
+					, [ 63 ] // 30.3015 
+					, [ 64 ] // 30.3125 
+					, [ 63 ] // 30.3333 
+					
+					, [ 63 ] // 30.3015  
+					, [ 64 ] // 30.3125 // until with count 
+					, [ 39, [ 2 ], 23 ] // 10.1063 // near each Char 
 					] 
-				] 
+				.map( a => [] .concat( 
+					... a .map( aa => 
+						aa instanceof Array ? ( console .log( aa ) , aa ) 
+						: [ ... Array( aa ) ] .map( q => 3 ) // default 
+						) 
+					) ) 
 			
 			, lineQuery = nameBlock .length - 1 
 			, nameWidths 
@@ -219,6 +222,7 @@ imgLoader .onload = q => {
 			, rightP, pLen 
 			, leftv, rightv 
 			; 
+		console .log( nameBlock ); 
 		
 		lineHeight = 12.8; 
 		
