@@ -225,7 +225,6 @@ imgLoader .onload = q => {
 		.forEach( ce => Object .assign( ce, { width : canvasWidth + 1 + 1, height : canvasHeight } ) ) 
 			; 
 		
-		// [ [ 0, 0 ] ] 
 		[ [ 0, 0 ], [ width, -lineHeight ] ] 
 		.forEach( ([ xGab, yGab ]) => 
 			forIn( nameCount, i => { 
