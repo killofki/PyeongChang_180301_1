@@ -360,11 +360,7 @@ function getNameZone() {
 					... t 
 					.match( /\d+(\.\d+)?\s*(\*\s*\d+)?/g ) 
 					.map( u => u .match( /(\d+(\.\d+)?)\s*(\*\s*(\d+))?/ ) ) 
-					.map( ([ , v,,, count = 1 ]) => 
-						( console.log(v,count),
-						[ ... Array( count | 0 ) ] .map( q => v * 1 ) 
-						)
-						) 
+					.map( ([ , v,,, count = 1 ]) => [ ... Array( count | 0 ) ] .map( q => v * 1 ) ) 
 					// .map( u => u .match( /(?<v>\d+(\.\d+)?)\s*(\*\s*(?<count>\d+))?/ ) ) 
 					// .map( ({ groups : { v, count = 1 } }) => [ ... Array( count | 0 ) ] .map( q => v * 1 ) ) 
 					) 
