@@ -222,7 +222,6 @@ imgLoader .onload = q => {
 		canvasHeight = lineHeight * nameCount; 
 		
 		[ inC, inCtx ] 
-		// .forEach( ce => Object .assign( ce, { width, height } ) ) 
 		.forEach( ce => Object .assign( ce, { width : canvasWidth + 1 + 1, height : canvasHeight } ) ) 
 			; 
 		
@@ -236,7 +235,6 @@ imgLoader .onload = q => {
 					, ... [] .concat( ... 
 						[ 
 							  [ lineLeft + leftv - xGab, lineTop - yGab, eachWidth, lineHeight ] 
-							  // [ lineLeft + i * eachWidth - xGab, lineTop - yGab, eachWidth, lineHeight ] 
 							, [ 1, i * lineHeight, eachWidth, lineHeight ] 
 							] 
 						.map( va => va .map( v => Math .floor( v ) ) ) 
