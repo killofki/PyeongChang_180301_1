@@ -197,7 +197,7 @@ imgLoader .onload = q => {
 			, fromP, size, toP 
 			, i 
 			
-			, lineQuery = nameBlock .length - 1 
+			, lineQuery 
 			, nameWidths 
 			, nameRight = [] 
 			, rightP, pLen 
@@ -207,7 +207,7 @@ imgLoader .onload = q => {
 		
 		lineHeight = 12.8; 
 		
-		// lineQuery = 1 
+		lineQuery = nameBlock .length - 1; 
 		nameWidths = nameBlock[ lineQuery ]; 
 		
 		[ lineLeft, lineRight ] = nameRange[ lineQuery ]; // pick line 
