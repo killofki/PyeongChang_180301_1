@@ -203,8 +203,6 @@ imgLoader .onload = q => {
 			, rightP, pLen 
 			, leftv, rightv 
 			; 
-		console .log( nameBlock[ nameBlock .length - 1 ] ); 
-		
 		lineHeight = 12.8; 
 		
 		lineQuery = nameBlock .length - 1; 
@@ -217,13 +215,11 @@ imgLoader .onload = q => {
 		rightP = 0; 
 		nameWidths .map( ( w, i ) => nameRight[ i ] = rightP += w ); 
 		pLen = lineWidth / rightP; 
-		console .log( pLen ); 
 		nameCount = nameRight .length = nameWidths .length; 
 		
 		
 		canvasWidth = nameWidths .reduce( ( a, b ) => a > b ? a : b ) * pLen + 1; 
 		canvasHeight = lineHeight * nameCount; 
-		console .log( canvasWidth, canvasHeight ); 
 		
 		[ inC, inCtx ] 
 		// .forEach( ce => Object .assign( ce, { width, height } ) ) 
