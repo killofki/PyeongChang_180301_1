@@ -146,7 +146,9 @@ viral <a href="https://twitter.com/killofki/status/968229584108912642" target="_
 
 var 
 	  { overName, overNameCut, overCutX, nameRange, nameBlock } = getNameZone() 
-	, overmousedown = false 
+	, overmousedown = false
+	, overmousedrag = false 
+	, lineShowing = false 
 	; 
 
 nameRange .forEach( ( [ a, b ], i ) => addDot( b - 1920, ( i + 1 ) * 12.8 ) ); // sample pointer 
@@ -161,18 +163,24 @@ $( 'img#img2' ) .onclick = ( { offsetX, offsetY } = event ) => {
 	  [
 		  $( 'div#overmouse' )
 		, { 
-			  onmousemove : ( { offsetX, offsetY } = event ) => { 
-				overmousedown && mousemove( offsetX, offsetY ); 
-				} 
+			  onmousemove : ( { offsetX, offsetY } = event ) => { ( overmousedrag = overmousedown ) && lineShow( offsetX, offsetY ); } 
+			, onclick : ( { offsetX, offsetY } = event ) => { lineShowing ? lineHide() : lineShow( offsetX, offsetY ); } 
 			, onmousedown : q => { overmousedown = true; } 
 			} 
 		] 
 	, [ 
 		  window 
 		, { 
-			  onmouseup : mouseout 
-			, onblur : mouseout 
-			, ondragend : mouseout 
+			  onmouseup : ( ev = event ) => { 
+				overmousedown = false; 
+				overmousedrag && lineHide( ev ); 
+				} 
+			, onblur : lineHide 
+			, ondragend : ( ev = event ) => { 
+				overmousedown = false; 
+				overmousedrag && lineHide( ev ); 
+				overmousedrag = false; 
+				} 
 			} 
 		]
 	] 
@@ -254,7 +262,7 @@ imgLoader .src = 'DW7RL5GVMAITe3X.jpg large.jpg';
 
 
 // functions.. 
-function mousemove( x, y ) { 
+function lineShow( x, y ) { 
 	let 
 		  p = Math .floor( y / 12.8 )
 		, [ xfrom, xto ] = nameRange[ p ] 
@@ -269,12 +277,13 @@ function mousemove( x, y ) {
 			}
 		, ( v, p ) => $( 'div#screenZone' ) .style .setProperty( p, v ) 
 		); 
+	lineShowing = true; 
 	} 
-function mouseout() { 
-	overmousedown = false; 
+function lineHide() { 
 	[ '--screentop', '--screenbottom', '--screenleft', '--screenright' ] 
 	.forEach( p => $( 'div#screenZone' ) .style .removeProperty( p ) ) 
 		; 
+	lineShowing = false; 
 	} 
 
 function getNameZone() { 
